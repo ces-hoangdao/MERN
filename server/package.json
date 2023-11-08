@@ -1,0 +1,29 @@
+{
+  "name": "mern",
+  "version": "1.0.0",
+  "description": "mern app",
+  "main": "server.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.ts",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "author": "hoang helios",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^16.1.1",
+    "@types/node": "^20.9.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "prettier": "3.0.3"
+  }
+}
