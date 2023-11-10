@@ -1,10 +1,10 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from 'mongoose'
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/mern-app");
-    console.log("connect DB success");
+    await mongoose.connect(process.env.DB_CONNECTIONS_STRING)
+    console.log('connect DB success')
   } catch (error) {
-    console.log("connect database error: " + error);
+    console.log('connect database error: ' + error)
   }
-};
+}
