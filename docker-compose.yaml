@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: "frontend"
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    networks:
+      - mern-netwwork
+  backend:
+    build: ./backend
+    container_name: "backend"
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_CONNECTIONS_STRING=mongodb+srv://dvhoang2106:Helios!@12@clustermern.ptzjvvo.mongodb.net/
+      - JWT_SECRET=helios
+      - JWT_TIME=36
+    networks:
+      - mern-netwwork
+
+networks:
+  mern-netwwork:
+    driver: bridge

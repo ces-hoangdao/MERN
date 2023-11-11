@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { LoginHandler } from "../services/AuthServices";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({
@@ -28,7 +29,7 @@ const Login = () => {
 
       if (role === "regular") {
         console.log(role);
-        window.location.href = "/";
+        toast.success("login success");
       }
     }
   };
