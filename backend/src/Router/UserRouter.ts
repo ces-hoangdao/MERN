@@ -1,8 +1,13 @@
-import express from "express";
-import UserController from "../Controllers/UserController";
-const userRouter = express.Router();
+import express from 'express'
+import * as UserController from '../Controllers/UserController'
+import * as Middleware from '../Middleware/AuthMiddleware'
+const userRouter = express.Router()
 
-userRouter.get("/", UserController.getListUser);
-userRouter.get("/:id", UserController.getUser);
+userRouter.get('/', [Middleware.isAuthentication], UserController.getUsers)
+userRouter.get(
+  '/:userId',
+  [Middleware.isAuthentication],
+  UserController.getUser
+)
 
-export default userRouter;
+export default userRouter

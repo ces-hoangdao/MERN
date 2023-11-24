@@ -1,15 +1,24 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
+import * as UserService from '../Services/UserServices'
+import { HTTP_STATUS } from '../constants/HttpStatus'
 
-const getListUser = (req: Request, res: Response) => {
-  res.send("list user");
-};
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await UserService.getListUsers()
+    return res.status(HTTP_STATUS.OK).send(users)
+  } catch (error) {
+    const errorMessage = error.message
+    return res.status(HTTP_STATUS.INTERNAL_SERVER).send({ error: errorMessage })
+  }
+}
 
-const getUser = (req: Request, res: Response) => {
-  res.send("get user");
-};
-
-const UserController = {
-  getListUser,
-  getUser,
-};
-export default UserController;
+export const getUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params
+    const user = await UserService.getUser(userId)
+    return res.status(HTTP_STATUS.OK).send(user)
+  } catch (error) {
+    const errorMessage = error.message
+    return res.status(HTTP_STATUS.INTERNAL_SERVER).send({ error: errorMessage })
+  }
+}

@@ -1,40 +1,34 @@
-import { Link } from "react-router-dom"
-import { useState } from "react"
-import { toast } from "react-toastify"
-import { LoginHandler } from "../services/AuthServices"
+import { Link, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { LoginHandler } from '../services/AuthServices';
 
 function Login() {
 	const [userInfo, setUserInfo] = useState({
-		email: "",
-		password: "",
-	})
+		email: '',
+		password: '',
+	});
+	const [isLoggedIn, setIsLogged] = useState<boolean>(false);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target
+		const { name, value } = e.target;
 		setUserInfo({
 			...userInfo,
 			[name]: value,
-		})
-	}
+		});
+	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		const accessToken = await LoginHandler(userInfo)
+		e.preventDefault();
+		const accessToken = await LoginHandler(userInfo);
 		if (accessToken) {
-			const { role } = accessToken as { role: string }
-			setUserInfo({
-				email: "",
-				password: "",
-			})
-
-			if (role === "regular") {
-				console.log(role)
-				toast.success("login success")
-			}
+			toast.success('login success');
+			setIsLogged(true);
 		}
-	}
-
-	return (
+	};
+	return isLoggedIn ? (
+		<Navigate replace to="/" />
+	) : (
 		<section className="py-10 bg-gray-50 sm:py-16 lg:py-24">
 			<div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 				<div className="max-w-2xl mx-auto text-center">
@@ -152,7 +146,7 @@ function Login() {
 				</div>
 			</div>
 		</section>
-	)
+	);
 }
 
-export default Login
+export default Login;

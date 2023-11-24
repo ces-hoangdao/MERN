@@ -2,6 +2,7 @@ import User from '../Models/UserModel'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 const SALT_ROUNDS = 10
+const JWT_TIME_LIMIT = 60 * 60
 
 export const register = async ({
   username,
@@ -58,15 +59,13 @@ export const login = async ({
       throw new Error('Incorrect password please double check!')
     }
     const accessToken = jwt.sign(
-      { id: user._id, usernames: user.username },
+      { id: user._id, username: user.username },
       process.env.JWT_SECRET,
       {
-        expiresIn: process.env.JWT_TIME,
+        expiresIn: JWT_TIME_LIMIT,
       }
     )
     const data = {
-      username: user.username,
-      email: user.email,
       accessToken,
     }
     return data
